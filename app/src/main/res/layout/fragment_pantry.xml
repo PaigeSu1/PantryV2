@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PantryFragment"
+    android:padding="16dp">
+
+    <!-- This is just a test thing -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Pantry"
+        android:textSize="16sp" />
+
+    <!-- TOOD:
+    - Add a search bar
+    https://developer.android.com/develop/ui/compose/components/search-bar
+    - Add a way to sort the pantry by different criteria
+    - Get the thing actually working
+    - The item views shouldn't actually be TextViews-they should be rounded blocks that the user can click on to view extra information
+    -->
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PantryFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pantry_container_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp" />
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>
