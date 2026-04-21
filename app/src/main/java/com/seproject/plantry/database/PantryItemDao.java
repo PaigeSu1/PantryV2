@@ -12,7 +12,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface PantryDao {
+public interface PantryItemDao {
 
     // How to talk to the database through functions
     @Insert

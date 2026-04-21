@@ -14,11 +14,12 @@ import com.seproject.plantry.database.PantryItem;
 
 import java.util.List;
 
-public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryViewHolder> {
+
+public class PantryItemAdapter extends RecyclerView.Adapter<PantryItemAdapter.PantryViewHolder> {
 
     private List<PantryItem> items;
 
-    public PantryAdapter(List<PantryItem> items) {
+    public PantryItemAdapter(List<PantryItem> items) {
         this.items = items;
     }
 
@@ -33,8 +34,8 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
     @Override
     public void onBindViewHolder(@NonNull PantryViewHolder holder, int position) {
         PantryItem item = items.get(position);
-        holder.name.setText(item.name);
         holder.quantity.setText(String.valueOf(item.quantity));
+        holder.buy.setText(String.valueOf(item.buyDate));
         holder.expiration.setText(String.valueOf(item.expirationDate));
     }
 
@@ -44,13 +45,13 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
     }
 
     static class PantryViewHolder extends RecyclerView.ViewHolder {
-        TextView name, quantity, expiration;
+        TextView quantity, buy, expiration;
 
         public PantryViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.itemName);
-            quantity = itemView.findViewById(R.id.itemQuantity);
-            expiration = itemView.findViewById(R.id.itemExpiration);
+            quantity = itemView.findViewById(R.id.item_quantity);
+            buy = itemView.findViewById(R.id.item_buy_date);
+            expiration = itemView.findViewById(R.id.item_expiration_date);
         }
     }
 

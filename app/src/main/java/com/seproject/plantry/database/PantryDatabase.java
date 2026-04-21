@@ -6,10 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {PantryItem.class}, version = 1)
+/// The database for all data in the app
+@Database(entities = {PantryItem.class, PantryGroup.class}, version = 1)
 public abstract class PantryDatabase extends RoomDatabase {
     private static PantryDatabase instance;
-    public abstract PantryDao pantryDao();
+    public abstract PantryItemDao pantryItemDao();
+    public abstract PantryGroupDao pantryGroupDao();
 
     public static synchronized PantryDatabase getInstance(Context context) {
         if (instance == null) {
