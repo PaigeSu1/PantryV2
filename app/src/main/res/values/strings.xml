@@ -54,4 +54,5 @@
     <string name="warning_icon">Informs the user of approaching or past expiry</string>
     <string name="show_more_options">Show more options</string>
     <string name="navigate_to_the_group_viewer">Navigate to the group viewer</string>
+    <string name="rename">Rename</string>
 </resources>
