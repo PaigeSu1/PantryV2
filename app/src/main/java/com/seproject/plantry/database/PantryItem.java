@@ -3,6 +3,8 @@ package com.seproject.plantry.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 /**
  * The type for a particular item or set of items with the same buy date and expiration date.
  *
@@ -28,5 +30,27 @@ public class PantryItem {
         this.quantity = quantity;
         this.buyDate = buyDate;
         this.expirationDate = expirationDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        PantryItem r = (PantryItem) o;
+        return id == r.id && quantity == r.quantity && Objects.equals(buyDate, r.buyDate) && Objects.equals(expirationDate, r.expirationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, quantity, buyDate, expirationDate);
     }
 }
