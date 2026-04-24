@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.seproject.plantry.R;
 import com.seproject.plantry.database.PantryGroup;
-import com.seproject.plantry.database.PantryItem;
 
 import java.util.List;
 
@@ -38,6 +37,7 @@ public class PantryGroupAdapter extends RecyclerView.Adapter<PantryGroupAdapter.
     public void onBindViewHolder(@NonNull PantryGroupViewHolder holder, int position) {
         PantryGroup item = items.get(position);
         holder.name.setText(item.name);
+        // category or state could be added here
     }
 
     @Override
