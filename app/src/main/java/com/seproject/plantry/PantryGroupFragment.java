@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,6 +62,9 @@ public class PantryGroupFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.pantry_group_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        TextView titleView = root.findViewById(R.id.pantry_group_title);
+        titleView.setText(groupName != null ? groupName : "Item Details");
 
         viewModel = new ViewModelProvider(requireActivity()).get(PantryViewModel.class);
 

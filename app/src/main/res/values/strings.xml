@@ -57,7 +57,7 @@
     <string name="manual">Manual</string>
     <string name="scan">Scan</string>
     <string name="has_expiration_date">Has Expiration Date</string>
-    <string name="buy_date">Buy Date</string>
+    <string name="buy_date">Expiration Date</string>
     <string name="fruit">Fruit</string>
     <string name="meat">Meat</string>
     <string name="vegetable">Vegetable</string>

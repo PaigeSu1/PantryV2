@@ -24,7 +24,12 @@ public class PantryGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int TYPE_ITEM = 1;
 
     private List<Object> flatItems = new ArrayList<>();
+    private List<PantryGroup> allGroups = new ArrayList<>();
+    private List<PantryGroup> currentFilteredGroups = new ArrayList<>();
     private OnItemClickListener listener;
+    
+    private int itemsPerPage = 10;
+    private int currentPage = 0;
 
     public interface OnItemClickListener {
         void onItemClick(PantryGroup group);
@@ -32,14 +37,61 @@ public class PantryGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public PantryGroupAdapter(List<PantryGroup> items, OnItemClickListener listener) {
         this.listener = listener;
-        setItems(items);
+        setAllGroups(items);
     }
 
-    public void setItems(List<PantryGroup> items) {
+    public void setAllGroups(List<PantryGroup> items) {
+        this.allGroups = items != null ? items : new ArrayList<>();
+        updateList(allGroups);
+    }
+
+    public void filter(String query) {
+        if (query.isEmpty()) {
+            currentFilteredGroups = new ArrayList<>(allGroups);
+        } else {
+            currentFilteredGroups = new ArrayList<>();
+            String lowerQuery = query.toLowerCase();
+            for (PantryGroup g : allGroups) {
+                boolean matchesName = g.name.toLowerCase().contains(lowerQuery);
+                boolean matchesCategory = g.category != null && g.category.toLowerCase().contains(lowerQuery);
+                
+                if (matchesName || matchesCategory) {
+                    currentFilteredGroups.add(g);
+                }
+            }
+        }
+        currentPage = 0;
+        updateDisplayList();
+    }
+
+    public void setCurrentPage(int page) {
+        this.currentPage = page;
+        updateDisplayList();
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public int getPageCount() {
+        if (currentFilteredGroups.isEmpty()) return 1;
+        return (int) Math.ceil((double) currentFilteredGroups.size() / itemsPerPage);
+    }
+
+    private void updateDisplayList() {
         flatItems.clear();
-        if (items != null) {
+        
+        int start = currentPage * itemsPerPage;
+        int end = Math.min(start + itemsPerPage, currentFilteredGroups.size());
+        
+        List<PantryGroup> pageItems = new ArrayList<>();
+        if (start < currentFilteredGroups.size()) {
+            pageItems = currentFilteredGroups.subList(start, end);
+        }
+
+        if (!pageItems.isEmpty()) {
             Map<String, List<PantryGroup>> grouped = new HashMap<>();
-            for (PantryGroup item : items) {
+            for (PantryGroup item : pageItems) {
                 String cat = item.category != null ? item.category : "Uncategorized";
                 if (!grouped.containsKey(cat)) {
                     grouped.put(cat, new ArrayList<>());
@@ -52,13 +104,16 @@ public class PantryGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             for (String category : categories) {
                 flatItems.add(category); // Add Header
-                flatItems.add(grouped.get(category)); // Keep items together if needed, but here we flatten
-                List<PantryGroup> groupItems = grouped.get(category);
-                flatItems.addAll(groupItems);
-                flatItems.remove(flatItems.size() - groupItems.size() - 1); // remove the list object
+                flatItems.addAll(grouped.get(category));
             }
         }
         notifyDataSetChanged();
+    }
+
+    private void updateList(List<PantryGroup> items) {
+        this.currentFilteredGroups = items != null ? items : new ArrayList<>();
+        currentPage = 0;
+        updateDisplayList();
     }
 
     @Override

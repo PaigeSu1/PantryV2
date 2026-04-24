@@ -136,7 +136,8 @@
                     android:paddingVertical="32dp"
                     android:focusable="false"
                     android:clickable="true"
-                    android:cursorVisible="false" />
+                    android:cursorVisible="false"
+                    android:hint="@string/date_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Buttons Row -->

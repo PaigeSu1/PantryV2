@@ -54,13 +54,52 @@ public class PantryFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
+        android.widget.EditText searchBar = root.findViewById(R.id.search_bar);
+        searchBar.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {}
+        });
+
         // Observe the database and update the list when data changes
         viewModel.getGroups().observe(getViewLifecycleOwner(), groups -> {
             if (groups != null) {
-                adapter.setItems(groups);
+                adapter.setAllGroups(groups);
+                updatePagination(root);
+            }
+        });
+
+        root.findViewById(R.id.prev_page).setOnClickListener(v -> {
+            int currentPage = adapter.getCurrentPage();
+            if (currentPage > 0) {
+                adapter.setCurrentPage(currentPage - 1);
+                updatePagination(root);
+            }
+        });
+
+        root.findViewById(R.id.next_page).setOnClickListener(v -> {
+            int currentPage = adapter.getCurrentPage();
+            if (currentPage < adapter.getPageCount() - 1) {
+                adapter.setCurrentPage(currentPage + 1);
+                updatePagination(root);
             }
         });
 
         return root;
+    }
+
+    private void updatePagination(View root) {
+        android.widget.TextView pageNum = root.findViewById(R.id.page_number);
+        pageNum.setText(String.valueOf(adapter.getCurrentPage() + 1));
+        
+        root.findViewById(R.id.prev_page).setAlpha(adapter.getCurrentPage() == 0 ? 0.3f : 1.0f);
+        root.findViewById(R.id.next_page).setAlpha(adapter.getCurrentPage() >= adapter.getPageCount() - 1 ? 0.3f : 1.0f);
     }
 }
