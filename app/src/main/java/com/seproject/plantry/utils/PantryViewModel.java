@@ -25,7 +25,7 @@ public class PantryViewModel extends AndroidViewModel {
 
     public PantryViewModel(Application application) {
         super(application);
-        db = Room.databaseBuilder(application, PantryDatabase.class, "pantry-db").build();
+        db = PantryDatabase.getInstance(application);
         groupDao = db.pantryGroupDao();
         itemDao = db.pantryItemDao();
     }

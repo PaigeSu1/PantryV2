@@ -110,8 +110,10 @@ public class AddItemsFragment extends Fragment {
         String category = categoryInput.getText().toString().trim();
         String date = buyDateInput.getText().toString().trim();
 
+        boolean isDefaultDate = date.isEmpty();
+
         // If no date was picked, use the current day's date as default
-        if (date.isEmpty()) {
+        if (isDefaultDate) {
             String myFormat = "MM/dd/yyyy";
             SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
             date = dateFormat.format(Calendar.getInstance().getTime());
@@ -128,14 +130,6 @@ public class AddItemsFragment extends Fragment {
         } catch (NumberFormatException e) {
             Toast.makeText(getContext(), "Invalid quantity", Toast.LENGTH_SHORT).show();
             return;
-        }
-
-        // Save the item
-        boolean isDefaultDate = date.isEmpty();
-        if (isDefaultDate) {
-            String myFormat = "MM/dd/yyyy";
-            SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
-            date = dateFormat.format(Calendar.getInstance().getTime());
         }
 
         PantryItem newItem = new PantryItem(name, quantity, date, date, isDefaultDate);
